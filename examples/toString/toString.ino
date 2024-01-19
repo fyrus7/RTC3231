@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <RTClib2.h>
 
-RTC_DS1307 rtc;
+RTC_DS3231 rtc;
 
 
 void setup () {
