@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*!
-  @file     RTClib.h
+  @file     RTClib2.h
 
   Original library by JeeLabs http://news.jeelabs.org/code/, released to the
   public domain
@@ -9,8 +9,7 @@
 
   This is a fork of JeeLab's fantastic real time clock library for Arduino.
 
-  For details on using this library with an RTC module like the DS1307, PCF8523,
-  or DS3231, see the guide at:
+  For details on using this library with an RTC module like the DS3231, see the guide at:
   https://learn.adafruit.com/ds1307-real-time-clock-breakout-board-kit/overview
 
   Adafruit invests time and resources providing this open source code,
@@ -19,8 +18,8 @@
 */
 /**************************************************************************/
 
-#ifndef _RTCLIB_H_
-#define _RTCLIB_H_
+#ifndef _RTCLIB2_H_
+#define _RTCLIB2_H_
 
 #include <Adafruit_I2CDevice.h>
 #include <Arduino.h>
@@ -31,16 +30,6 @@ class TimeSpan;
 #define SECONDS_PER_DAY 86400L ///< 60 * 60 * 24
 #define SECONDS_FROM_1970_TO_2000                                              \
   946684800 ///< Unixtime for 2000-01-01 00:00:00, useful for initialization
-
-/** DS1307 SQW pin mode settings */
-enum Ds1307SqwPinMode {
-  DS1307_OFF = 0x00,            // Low
-  DS1307_ON = 0x80,             // High
-  DS1307_SquareWave1HZ = 0x10,  // 1Hz square wave
-  DS1307_SquareWave4kHz = 0x11, // 4kHz square wave
-  DS1307_SquareWave8kHz = 0x12, // 8kHz square wave
-  DS1307_SquareWave32kHz = 0x13 // 32kHz square wave
-};
 
 /** DS3231 SQW pin mode settings */
 enum Ds3231SqwPinMode {
@@ -73,55 +62,6 @@ enum Ds3231Alarm2Mode {
                                   and minutes match */
   DS3231_A2_Day = 0x8        /**< Alarm when day (day of week), hours
                                   and minutes match */
-};
-/** PCF8523 INT/SQW pin mode settings */
-enum Pcf8523SqwPinMode {
-  PCF8523_OFF = 7,             /**< Off */
-  PCF8523_SquareWave1HZ = 6,   /**< 1Hz square wave */
-  PCF8523_SquareWave32HZ = 5,  /**< 32Hz square wave */
-  PCF8523_SquareWave1kHz = 4,  /**< 1kHz square wave */
-  PCF8523_SquareWave4kHz = 3,  /**< 4kHz square wave */
-  PCF8523_SquareWave8kHz = 2,  /**< 8kHz square wave */
-  PCF8523_SquareWave16kHz = 1, /**< 16kHz square wave */
-  PCF8523_SquareWave32kHz = 0  /**< 32kHz square wave */
-};
-
-/** PCF8523 Timer Source Clock Frequencies for Timers A and B */
-enum PCF8523TimerClockFreq {
-  PCF8523_Frequency4kHz = 0,   /**< 1/4096th second = 244 microseconds,
-                                    max 62.256 milliseconds */
-  PCF8523_Frequency64Hz = 1,   /**< 1/64th second = 15.625 milliseconds,
-                                    max 3.984375 seconds */
-  PCF8523_FrequencySecond = 2, /**< 1 second, max 255 seconds = 4.25 minutes */
-  PCF8523_FrequencyMinute = 3, /**< 1 minute, max 255 minutes = 4.25 hours */
-  PCF8523_FrequencyHour = 4,   /**< 1 hour, max 255 hours = 10.625 days */
-};
-
-/** PCF8523 Timer Interrupt Low Pulse Width options for Timer B only */
-enum PCF8523TimerIntPulse {
-  PCF8523_LowPulse3x64Hz = 0,  /**<  46.875 ms   3/64ths second */
-  PCF8523_LowPulse4x64Hz = 1,  /**<  62.500 ms   4/64ths second */
-  PCF8523_LowPulse5x64Hz = 2,  /**<  78.125 ms   5/64ths second */
-  PCF8523_LowPulse6x64Hz = 3,  /**<  93.750 ms   6/64ths second */
-  PCF8523_LowPulse8x64Hz = 4,  /**< 125.000 ms   8/64ths second */
-  PCF8523_LowPulse10x64Hz = 5, /**< 156.250 ms  10/64ths second */
-  PCF8523_LowPulse12x64Hz = 6, /**< 187.500 ms  12/64ths second */
-  PCF8523_LowPulse14x64Hz = 7  /**< 218.750 ms  14/64ths second */
-};
-
-/** PCF8523 Offset modes for making temperature/aging/accuracy adjustments */
-enum Pcf8523OffsetMode {
-  PCF8523_TwoHours = 0x00, /**< Offset made every two hours */
-  PCF8523_OneMinute = 0x80 /**< Offset made every minute */
-};
-
-/** PCF8563 CLKOUT pin mode settings */
-enum Pcf8563SqwPinMode {
-  PCF8563_SquareWaveOFF = 0x00,  /**< Off */
-  PCF8563_SquareWave1Hz = 0x83,  /**< 1Hz square wave */
-  PCF8563_SquareWave32Hz = 0x82, /**< 32Hz square wave */
-  PCF8563_SquareWave1kHz = 0x81, /**< 1kHz square wave */
-  PCF8563_SquareWave32kHz = 0x80 /**< 32kHz square wave */
 };
 
 /**************************************************************************/
@@ -345,25 +285,6 @@ protected:
 
 /**************************************************************************/
 /*!
-    @brief  RTC based on the DS1307 chip connected via I2C and the Wire library
-*/
-/**************************************************************************/
-class RTC_DS1307 : RTC_I2C {
-public:
-  bool begin(TwoWire *wireInstance = &Wire);
-  void adjust(const DateTime &dt);
-  uint8_t isrunning(void);
-  DateTime now();
-  Ds1307SqwPinMode readSqwPinMode();
-  void writeSqwPinMode(Ds1307SqwPinMode mode);
-  uint8_t readnvram(uint8_t address);
-  void readnvram(uint8_t *buf, uint8_t size, uint8_t address);
-  void writenvram(uint8_t address, uint8_t data);
-  void writenvram(uint8_t address, const uint8_t *buf, uint8_t size);
-};
-
-/**************************************************************************/
-/*!
     @brief  RTC based on the DS3231 chip connected via I2C and the Wire library
 */
 /**************************************************************************/
@@ -396,51 +317,6 @@ public:
       @return the converted value
   */
   static uint8_t dowToDS3231(uint8_t d) { return d == 0 ? 7 : d; }
-};
-
-/**************************************************************************/
-/*!
-    @brief  RTC based on the PCF8523 chip connected via I2C and the Wire library
-*/
-/**************************************************************************/
-class RTC_PCF8523 : RTC_I2C {
-public:
-  bool begin(TwoWire *wireInstance = &Wire);
-  void adjust(const DateTime &dt);
-  bool lostPower(void);
-  bool initialized(void);
-  DateTime now();
-  void start(void);
-  void stop(void);
-  uint8_t isrunning();
-  Pcf8523SqwPinMode readSqwPinMode();
-  void writeSqwPinMode(Pcf8523SqwPinMode mode);
-  void enableSecondTimer(void);
-  void disableSecondTimer(void);
-  void enableCountdownTimer(PCF8523TimerClockFreq clkFreq, uint8_t numPeriods,
-                            uint8_t lowPulseWidth);
-  void enableCountdownTimer(PCF8523TimerClockFreq clkFreq, uint8_t numPeriods);
-  void disableCountdownTimer(void);
-  void deconfigureAllTimers(void);
-  void calibrate(Pcf8523OffsetMode mode, int8_t offset);
-};
-
-/**************************************************************************/
-/*!
-    @brief  RTC based on the PCF8563 chip connected via I2C and the Wire library
-*/
-/**************************************************************************/
-class RTC_PCF8563 : RTC_I2C {
-public:
-  bool begin(TwoWire *wireInstance = &Wire);
-  bool lostPower(void);
-  void adjust(const DateTime &dt);
-  DateTime now();
-  void start(void);
-  void stop(void);
-  uint8_t isrunning();
-  Pcf8563SqwPinMode readSqwPinMode();
-  void writeSqwPinMode(Pcf8563SqwPinMode mode);
 };
 
 /**************************************************************************/
@@ -516,4 +392,4 @@ protected:
   uint32_t lastMicros;
 };
 
-#endif // _RTCLIB_H_
+#endif // _RTCLIB2_H_
