@@ -1,4 +1,4 @@
-#include "RTClib.h"
+#include "RTClib2.h"
 
 #define DS3231_ADDRESS 0x68   ///< I2C address for DS3231
 #define DS3231_TIME 0x00      ///< Time register
