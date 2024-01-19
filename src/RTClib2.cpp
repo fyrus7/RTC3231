@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*!
-  @file     RTClib.cpp
+  @file     RTClib2.cpp
 
   @mainpage Adafruit RTClib
 
@@ -24,11 +24,8 @@
     - DateTime represents a specific point in time; this is the data
       type used for setting and reading the supported RTCs
     - TimeSpan represents the length of a time interval
-  - Interfacing specific RTC chips:
-    - RTC_DS1307
+  - Interfacing specific RTC chips of
     - RTC_DS3231
-    - RTC_PCF8523
-    - RTC_PCF8563
   - RTC emulated in software; do not expect much accuracy out of these:
     - RTC_Millis is based on `millis()`
     - RTC_Micros is based on `micros()`; its drift rate can be tuned by
@@ -43,12 +40,10 @@
 */
 /**************************************************************************/
 
-#include "RTClib.h"
+#include "RTClib2.h"
 
 #ifdef __AVR__
 #include <avr/pgmspace.h>
-#elif defined(ESP8266)
-#include <pgmspace.h>
 #elif defined(ARDUINO_ARCH_SAMD)
 // nothing special needed
 #elif defined(ARDUINO_SAM_DUE)
