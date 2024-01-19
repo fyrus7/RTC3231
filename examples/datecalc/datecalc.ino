@@ -1,6 +1,6 @@
 // Simple date conversions and calculations
 
-#include "RTClib.h"
+#include "RTClib2.h"
 
 void showDate(const char* txt, const DateTime& dt) {
     Serial.print(txt);
