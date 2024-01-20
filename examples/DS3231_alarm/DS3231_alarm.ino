@@ -6,7 +6,7 @@
  * CLOCK_INTERRUPT_PIN needs to work with interrupts
  */
 
-#include <RTClib2.h>
+#include <RTC3231.h>
 // #include <Wire.h>
 
 RTC_DS3231 rtc;
