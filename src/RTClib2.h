@@ -1,15 +1,15 @@
 /**************************************************************************/
 /*!
-  @file     RTClib2.h
+  @file     RTC3231.h
 
   Original library by JeeLabs http://news.jeelabs.org/code/, released to the
   public domain
 
   License: MIT (see LICENSE)
 
-  This is a fork of JeeLab's fantastic real time clock library for Arduino.
+  This is a fork of RTClib real time clock library for Arduino.
 
-  For details on using this library with an RTC module like the DS3231, see the guide at:
+  For details on using this library with an RTC module DS3231, see the guide at:
   https://learn.adafruit.com/ds1307-real-time-clock-breakout-board-kit/overview
 
   Adafruit invests time and resources providing this open source code,
@@ -18,8 +18,8 @@
 */
 /**************************************************************************/
 
-#ifndef _RTCLIB2_H_
-#define _RTCLIB2_H_
+#ifndef _RTC3231_H_
+#define _RTC3231_H_
 
 #include <Adafruit_I2CDevice.h>
 #include <Arduino.h>
