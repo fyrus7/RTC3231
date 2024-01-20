@@ -1,15 +1,14 @@
 /**************************************************************************/
 /*!
-  @file     RTClib2.cpp
+  @file     RTC3231.cpp
 
   @mainpage Adafruit RTClib
 
   @section intro Introduction
 
-  This is a fork of JeeLab's fantastic real time clock library for Arduino.
+  This is a fork of RTClib real time clock library for Arduino.
 
-  For details on using this library with an RTC module like the DS1307, PCF8523,
-  or DS3231, see the guide at:
+  For details on using this library with an RTC module DS3231, see the guide at:
   https://learn.adafruit.com/ds1307-real-time-clock-breakout-board-kit/overview
 
   Adafruit invests time and resources providing this open source code,
@@ -40,7 +39,7 @@
 */
 /**************************************************************************/
 
-#include "RTClib2.h"
+#include "RTC3231.h"
 
 #ifdef __AVR__
 #include <avr/pgmspace.h>
